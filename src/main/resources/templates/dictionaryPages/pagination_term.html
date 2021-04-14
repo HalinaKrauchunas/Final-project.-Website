@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>СЛЭ</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+<header class="header">
+    <form th:action="@{/logout}" method="post">
+        <input class="btn" type="submit" value="Выйти"/>
+    </form>
+    <nav class="nav_main">
+        <a class="nav_link" th:href="@{/main}">На главную</a>
+        <a class="nav_link" th:href="@{/dictionary/goToSections}">К разделам</a>
+    </nav>
+</header>
+
+<section class="uni_section" th:if="${termsPage.totalElements == 0}">
+    <h1 class="section_title">Терминов не найдено</h1>
+    <a th:href="@{/dictionary/addNewTerm}" class="btn" th:if="${(user.isAdmin() || user.isExpert())}">
+        Перейти к добавлению термина</a>
+    <br><br><br>
+    <img style="width: 300px; height:300px" src="/images/please.png"
+         alt="please">
+</section>
+
+<div th:if="${termsPage.totalElements > 0}">
+
+<div th:if="${word.isEmpty() && sectionId.isEmpty()}">
+    <section class="section1">
+        <nav class="nav_word">
+            <div th:each="word : ${words}">
+                <a class="nav_link"
+                   th:href="@{/dictionary/paginationTerm(word=${word})}"
+                   th:text="${word}"></a>
+            </div>
+        </nav>
+    </section>
+</div>
+
+<div th:if="${word.isEmpty() && !sectionId.isEmpty()}">
+    <h1 class="title" th:text="${sectionName}" id="center_align"></h1>
+    <section class="section1">
+        <nav class="nav_word">
+            <div th:each="word : ${words}">
+                <a class="nav_link"
+                   th:href="@{/dictionary/paginationTerm(word=${word}, sectionId=${sectionId})}"
+                   th:text="${word}"></a>
+            </div>
+        </nav>
+    </section>
+</div>
+
+</div>
+
+<section class="section2" th:if="${termsPage.content.size() gt 0}">
+
+    <div class="uni_section">
+
+        <h1 id="number" th:text="${termsPage.size}"></h1>
+
+        <a class="href_size" id="minus"
+           th:text="'-'"
+           th:if="${termsPage.size > 5}"
+           th:href="@{/dictionary/paginationTerm(word=${word}, page=${termsPage.number},
+            size =${termsPage.size - 5}, sectionId = ${sectionId})}">
+        </a>
+
+        <a class="href_size" id="plus"
+           th:text="'+'"
+           th:if="${termsPage.size < 25 && (termsPage.size + 5) * termsPage.number < termsPage.totalElements}"
+           th:href="@{/dictionary/paginationTerm(word=${word}, page=${termsPage.number},
+            size =${termsPage.size + 5}, sectionId = ${sectionId})}">
+        </a>
+
+    </div>
+</section>
+
+<table class="table" id="term">
+    <tr th:each="term : ${termsPage}">
+        <td class="td_dark_odd" th:text="${term.name} "></td>
+        <td class="td_grey_even" th:text="${term.section.name}"></td>
+        <td class="td_blue_odd" th:text="${term.source.substring(0,6) + '..'}"></td>
+
+        <td class="td_almost"><a th:href="@{/dictionary/goToTerm(termId=${term.id})}" class="btn"
+                                 th:text="Перейти"></a></td>
+
+        <td class="td_almost" th:if="${word.isEmpty() && sectionId.isEmpty() && user.isAdmin()}">
+        <a th:href="@{/dictionary/deleteTerm(termId=${term.id})}" class="btn"
+           th:text="Удалить"></a></td>
+    </tr>
+</table>
+
+<nav class="nav_between">
+    <a class="nav_link" th:if="${termsPage.number > 0}"
+       th:href="@{/dictionary/paginationTerm(word=${word}, page=${termsPage.number - 1},
+            size =${termsPage.size}, sectionId = ${sectionId})}"
+       th:text="Назад">
+    </a>
+
+    <a class="nav_link" th:if="${termsPage.number + 1 < termsPage.totalElements/termsPage.size}"
+       th:href="@{/dictionary/paginationTerm(word=${word}, page=${termsPage.number + 1},
+            size =${termsPage.size}, sectionId = ${sectionId})}"
+       th:text="Вперед">
+    </a>
+</nav>
+
+<section class="uni_section">
+    <table class="table_for_page" th:if="${termsPage.totalPages > 0}">
+        <tr>
+            <td class="td_for_page"
+                th:each="pageNumber : ${numbers}"
+                th:id="${pageNumber == termsPage.number} ? active">
+                <a class="nav_for_page"
+                   th:href="@{/dictionary/paginationTerm(word=${word}, page=${pageNumber},
+            size =${termsPage.size}, sectionId = ${sectionId})}"
+                   th:text="${pageNumber + 1}"></a>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<footer class="footer">
+    <p>H+ Sport is a fictitious brand created by
+        lynda.com solely for the purpose of training. All products and
+        people associated with H+ Sport are also fictitious. Any resemblance
+        to real brands, products, or people is purely coincidental.
+        Information provided about the product is also fictitious and should
+        not be construed to be representative of actual products on the
+        market in a similar product category.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,139 @@
+/*Login and registration pages*/
+body {
+    background: #999;
+    padding: 40px;
+}
+
+#bg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../images/backgrounds/footer.png) center no-repeat;
+) no-repeat center center fixed;
+    background-size: cover;
+    -webkit-filter: blur(3px);
+}
+.mess{
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 14px;
+    color:  #225556;
+}
+
+form {
+    position: relative;
+    width: 250px;
+    margin: 40px auto;
+    background: rgba(130,130,130,.3);
+    padding: 20px 22px;
+    border: 1px solid rgba(255, 255, 255, .4);
+    border-right-color: rgba(60, 60, 60, .4);
+    border-bottom-color: rgba(60, 60, 60, .4);
+}
+
+form input, form button {
+    outline: none;
+    width: 212px;
+    border: 1px solid rgba(60, 60, 60, .35);
+    border-bottom-color: rgba(255, 255, 255, .5);
+    border-left-color: rgba(80, 80, 80, .45);
+    background-color: rgba(0,0,0,.2);
+    background-repeat: no-repeat;
+    padding: 8px 24px 8px 10px;
+    font: bold .875em/1.25em 'Lobster', cursive;
+    letter-spacing: .075em;
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(0,0,0,.1);
+    margin-top: 20px;
+}
+
+form input:focus { background-color: rgba(0,0,0,.4); }
+
+
+::-webkit-input-placeholder { color: #ccc; text-transform: uppercase; }
+::-moz-placeholder { color: #ccc; text-transform: uppercase; }
+:-ms-input-placeholder { color: #ccc; text-transform: uppercase; }
+
+button[type=submit] {
+    border-radius: 20px;
+    width: 250px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: wheat;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    background: #225556;
+    transition: .3s linear, color .4s linear;
+    border: none;
+}
+button[type=submit]:hover {
+    cursor: pointer;
+    background:#F15B42;
+}
+
+.title {
+    text-align: center;
+    color: #0e1b47;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    top: 10px;
+    bottom: 10px;
+}
+
+.title:after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 2px;
+    margin: 20px auto 20px;
+
+    background-color:#F15B42;
+}
+/*Navigation*/
+.nav_main {
+    display: flex;
+    position: relative;
+    justify-content: flex-end;
+    font-size: 14px;
+    font-family: 'Lobster', cursive;
+}
+
+.nav_link {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 5px;
+    color: #0e1b48;
+    text-decoration: none;
+    transition: color .2s linear;
+}
+
+.nav_link:hover {
+    color: #F15B42;
+}
+
+.nav_link:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+
+    background-color: #F15B42;
+    opacity: 0;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+
+    transition: opacity .5s linear;
+}
+
+.nav_link:hover:after {
+    display: block;
+    opacity: 1;
+}

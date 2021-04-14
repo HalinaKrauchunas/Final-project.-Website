@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/login_page.css}" rel="stylesheet">
+</head>
+<body>
+<div id="bg"></div>
+
+<form th:action="@{/saveUser}" th:object="${user}" method="post">
+    <h1 class="title">Регистрация</h1>
+
+    <input type="hidden" th:field="*{id}" id="id">
+
+    <label>
+        <input type="text" placeholder="Введите ваше имя" th:field="*{username}" autocomplete="off" class="select" />
+    </label>
+    <h1 class="mess" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></h1>
+
+    <label>
+        <input type="password" placeholder="Введите пароль" th:field="*{password}" class="select"/>
+    </label>
+    <h1 class="mess" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></h1>
+
+    <label>
+        <input type="text" placeholder="Введите email" th:field="*{email}" autocomplete="off" class="select"/>
+    </label>
+    <h1 class="mess" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></h1>
+
+    <button type="submit">Зарегистрироваться</button>
+
+    <nav class="nav_main">
+        <a class="nav_link" th:href="@{/}">Назад</a>
+    </nav>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>СЛЭ</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+<header class="header">
+    <form th:action="@{/logout}" method="post">
+        <input class="btn" type="submit" value="Выйти"/>
+    </form>
+    <nav class="nav_main">
+        <a class="nav_link" href="/main" th:href="@{/main}">На главную</a>
+    </nav>
+</header>
+
+<section class="section2">
+    <form th:action="@{/administration/addRoleToSite}" th:object="${role}" th:method="post">
+        <input type="hidden" th:value="${role.id}" th:attr="name='roleId'"/>
+        <label>
+            <input class="select" type="text" th:field="*{name}" autocomplete="off">
+        </label>
+        <h1 class="mess" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></h1>
+        <br><br><br>
+        <input class="btn" type="submit" value="Добавить роль" id="btn_XXL">
+    </form>
+</section>
+
+<section class="section2" th:if="${usersPage!=null && usersPage.totalElements gt 0}">
+    <div class="uni_section">
+        <h1 id="number"
+            th:text="${usersPage.size}">
+        </h1>
+
+        <a class="href_size" id="minus"
+           th:text="'-'"
+           th:if="${usersPage.size>5}"
+           th:href="@{/administration(page=${usersPage.number},
+            size =${usersPage.size - 5})}">
+        </a>
+
+        <a class="href_size" id="plus"
+           th:text="'+'"
+           th:if="${usersPage.size<25 && (usersPage.size+5) * usersPage.number < usersPage.totalElements}"
+           th:href="@{/administration(page=${usersPage.number},
+            size =${usersPage.size+5})}">
+        </a>
+    </div>
+</section>
+
+<table class="table" id="term">
+    <tr th:each="user : ${usersPage}">
+        <td class="td_dark_odd" th:text="${user.username} "></td>
+        <td class="td_grey_even" th:text="${user.roles}"></td>
+
+        <td class="td_grey_even" th:if="${user.active}">
+            <a th:href="@{/administration/blockUser(userId=${user.id})}" class="btn"
+               th:text="Заблокировать"></a></td>
+
+        <td class="td_dark_odd" th:if="${!user.active}">
+            <a th:href="@{/administration/unblockUser(userId=${user.id})}" class="btn"
+               th:text="Разблокировать"></a></td>
+
+        <td class="td_grey_even">
+            <a th:href="@{/administration/choiceRoleForAdd(userId=${user.id})}" class="btn"
+               th:text="'Добавить роль'"></a></td>
+
+        <td class="td_grey_even">
+            <a th:href="@{/administration/choiceRoleForDelete(userId=${user.id})}" class="btn"
+               th:text="'Удалить роль'"></a></td>
+
+        <td class="td_almost"><a th:href="@{/administration/deleteUser(userId=${user.id})}" class="btn"
+                                 th:text="Удалить"></a></td>
+    </tr>
+</table>
+
+<nav class="nav_between" th:if="${usersPage!=null}">
+    <a class="nav_link" th:if="${usersPage.number > 0}"
+       th:href="@{/administration(page=${usersPage.number - 1},
+            size =${usersPage.size})}"
+       th:text="Назад">
+    </a>
+
+    <a class="nav_link" th:if="${usersPage.number + 1 < usersPage.totalElements/usersPage.size}"
+       th:href="@{/administration(page=${usersPage.number + 1},
+            size =${usersPage.size})}"
+       th:text="Вперед">
+    </a>
+</nav>
+
+<section class="uni_section" th:if="${usersPage!=null}">
+    <table class="table_for_page" th:if="${usersPage.totalPages > 0}">
+        <tr>
+            <td class="td_for_page"
+                th:each="pageNumber : ${numbers}"
+                th:id="${pageNumber == usersPage.number} ? active">
+                <a class="nav_for_page"
+                   th:href="@{/administration(page=${pageNumber},
+            size =${usersPage.size})}"
+                   th:text="${pageNumber + 1}"></a>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<footer class="footer">
+    <p>H+ Sport is a fictitious brand created by
+        lynda.com solely for the purpose of training. All products and
+        people associated with H+ Sport are also fictitious. Any resemblance
+        to real brands, products, or people is purely coincidental.
+        Information provided about the product is also fictitious and should
+        not be construed to be representative of actual products on the
+        market in a similar product category.</p>
+</footer>
+</body>
+</html>

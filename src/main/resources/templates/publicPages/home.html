@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>СЛЭ</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+<header class="header">
+    <nav class="nav_main">
+        <a class="nav_link" th:href="@{/login}">Войти</a>
+        <a class="nav_link" th:href="@{/registration}">Зарегистрироваться</a>
+    </nav>
+</header>
+
+<section class="s_section">
+    <h1 class="title">Судебная лингвистическая экспертиза</h1>
+    <h1 th:text="${message}"></h1>
+</section>
+</body>
+</html>

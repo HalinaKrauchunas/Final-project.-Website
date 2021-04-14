@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>СЛЭ</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="header">
+    <form th:action="@{/logout}" method="post">
+        <input class="btn" type="submit" value="Выйти"/>
+    </form>
+    <nav class="nav_main">
+        <a class="nav_link" th:href="@{/main}">На главную</a>
+        <a class="nav_link"  th:href="@{/dictionary}">Словарь терминов</a>
+        <a class="nav_link"
+           th:href="@{/dictionary/paginationTerm}">Все термины</a>
+    </nav>
+</header>
+
+<section class="uni_section">
+    <h1 class="title" id="center_align"> Тематические разделы </h1>
+    <img class="img" style="width: 200px; height:200px" src="/images/bear2.png"
+         alt="bear2">
+    <form th:action="@{/dictionary/addSection}" th:object="${section}" th:method="post">
+        <input type="hidden" th:value="${section.id}" th:attr="name='sectionId'"/>
+        <label>
+            <input class="select" type="text" th:field="*{name}" autocomplete="off">
+        </label>
+        <h1 class="mess" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></h1>
+        <br><br><br>
+        <input class="btn" type="submit" value="Добавить раздел" id="btn_XXL">
+    </form>
+</section>
+
+<section class="section1">
+    <table class="table" id="term">
+        <tr th:each="section : ${sections}">
+            <td class="td_dark_odd" th:text="${section.name} "></td>
+            <td class="td_almost"><a th:href="@{/dictionary/paginationTerm(sectionId=${section.id})}" class="btn"
+                                     th:text="Перейти"></a>
+            <td class="td_almost" th:if="${user.isAdmin()}"><a th:href="@{/dictionary/deleteSection(sectionId=${section.id})}" class="btn"
+                                     th:text="Удалить"></a>
+        </tr>
+    </table>
+</section>
+</body>
+
+<footer class="footer">
+    <p>H+ Sport is a fictitious brand created by
+        lynda.com solely for the purpose of training. All products and
+        people associated with H+ Sport are also fictitious. Any resemblance
+        to real brands, products, or people is purely coincidental.
+        Information provided about the product is also fictitious and should
+        not be construed to be representative of actual products on the
+        market in a similar product category.</p>
+</footer>
+</html>
+

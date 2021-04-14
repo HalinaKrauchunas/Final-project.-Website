@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>СЛЭ</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+<header class="header">
+    <form th:action="@{/logout}" method="post">
+        <input class="btn" type="submit" value="Выйти"/>
+    </form>
+    <nav class="nav_main">
+        <a class="nav_link" href="/main" th:href="@{/main}">На главную</a>
+        <a class="nav_link" href="/dictionary/goToSections" th:href="@{/dictionary/goToSections}">К разделам</a>
+    </nav>
+</header>
+
+<table class="table" th:if="${roles.size()>0}">
+    <tr th:each="role : ${roles}">
+        <td class="td_dark_odd" th:text="${role.name}"></td>
+        <td class="td_grey_even">
+            <a th:href="@{/administration/deleteRole(userId=${userId}, roleId=${role.id})}" class="btn"
+               th:text="'Выбрать роль'"></a></td>
+    </tr>
+</table>
+
+<footer class="footer">
+    <p>H+ Sport is a fictitious brand created by
+        lynda.com solely for the purpose of training. All products and
+        people associated with H+ Sport are also fictitious. Any resemblance
+        to real brands, products, or people is purely coincidental.
+        Information provided about the product is also fictitious and should
+        not be construed to be representative of actual products on the
+        market in a similar product category.</p>
+</footer>
+</body>
+</html>

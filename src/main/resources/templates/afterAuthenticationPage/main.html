@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>СЛЭ</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+    <nav class="nav_between">
+        <form th:action="@{/logout}" method="post">
+            <input class="btn" type="submit" value="Выйти"/>
+        </form>
+        <p th:text="'Добро пожаловать на сайт, ' + ${#authentication.name} + '!'"></p>
+    </nav>
+
+    <nav class="nav_main">
+        <a class="nav_link" th:href="@{/dictionary}">Словарь терминов</a>
+        <a class="nav_link" th:href="@{#}">Толковые словари</a>
+        <a class="nav_link" th:href="@{#}">Статьи</a>
+    </nav>
+</header>
+
+<section class="s_section">
+<h1 class="title">Судебная лингвистическая экспертиза</h1>
+</section>
+
+
+<footer class="footer">
+    <p>На данный момент сайт находится на стадии разработки :) </p>
+</footer>
+</body>
+</html>

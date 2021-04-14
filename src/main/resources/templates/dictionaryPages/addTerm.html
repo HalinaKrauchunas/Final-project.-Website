@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="header">
+    <form th:action="@{/logout}" method="post">
+        <input class="btn" type="submit" value="Выйти"/>
+    </form>
+    <nav class="nav_main">
+        <a class="nav_link" th:href="@{/dictionary}">Вернуться к словарю</a>
+        <a class="nav_link" th:href="@{/main}">На главную</a>
+        <a class="nav_link" th:href="@{/dictionary/goToSections}">К разделам</a>
+    </nav>
+</header>
+
+<section class="uni_section" th:if="${sections.size() == 0}">
+    <h1 class="section_title">Еще не создано ни одного раздела</h1>
+    <a th:if="${user.isExpert() || user.isAdmin()}" th:href="@{/dictionary/goToSections}"
+       class="btn">Перейти к добавлению раздела</a>
+    <br>
+    <img style="width: 300px; height:300px" src="/images/please.png"
+         alt="please">
+</section>
+
+
+<section class="uni_section" th:if="${sections.size() > 0}">
+
+    <h1 class="title">Добавление термина</h1>
+
+    <h2 class="section_title">Раздел</h2>
+    <form th:action="@{/dictionary/saveTerm}" th:object="${term}">
+
+        <label>
+            <select class="select" th:name="idSection">
+                <option th:each="choiceSection : ${sections}"
+                        th:value="${choiceSection.id}"
+                        th:text="${choiceSection.name}">
+                </option>
+            </select>
+        </label>
+        <input type="hidden" th:value="${term.id}" th:attr="name='id'"/>
+
+        <h2 class="section_title">Название термина</h2>
+        <label>
+            <input class="select" autocomplete="false" type="text" th:field="*{name}"/>
+        </label>
+        <h1 class="mess" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></h1>
+
+
+        <h2 class="section_title">Дефиниция</h2>
+        <label>
+            <textarea cols="60" rows="20" th:field="*{definition}"></textarea>
+        </label>
+        <h1 class="mess" th:if="${#fields.hasErrors('definition')}" th:errors="*{definition}"></h1>
+        <br>
+
+        <h2 class="section_title">Источник</h2>
+        <label>
+            <textarea cols="60" rows="3" th:field="*{source}"></textarea>
+        </label>
+        <h1 class="mess" th:if="${#fields.hasErrors('source')}" th:errors="*{source}"></h1>
+        <br><br><br>
+
+        <input type="submit" value="OK" class="btn">
+    </form>
+</section>
+</body>
+
+<footer class="footer">
+
+    <p>H+ Sport is a fictitious brand created by
+        lynda.com solely for the purpose of training. All products and
+        people associated with H+ Sport are also fictitious. Any resemblance
+        to real brands, products, or people is purely coincidental.
+        Information provided about the product is also fictitious and should
+        not be construed to be representative of actual products on the
+        market in a similar product category.</p>
+</footer>
+</html>

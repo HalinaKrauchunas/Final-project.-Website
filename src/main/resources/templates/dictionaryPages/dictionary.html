@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>СЛЭ</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+    <form th:action="@{/logout}" method="post">
+        <input class="btn" type="submit" value="Выйти"/>
+    </form>
+
+    <nav class="nav_main">
+        <a class="nav_link" th:href="@{/main}">На главную</a>
+        <a class="nav_link" th:href="@{/dictionary/paginationTerm}">Все термины</a>
+        <a class="nav_link" th:href="@{/dictionary/goToSections}">К разделам</a>
+    </nav>
+</header>
+
+<section class="section1">
+    <img class="img" src="images/backgrounds/3.png" alt="three owls">
+
+    <div class="intro_section_left">
+        <h1 class="title">
+            Словарь терминов и понятий судебной лингвистической экспертизы </h1>
+        <input th:if="${user.isAdmin() || user.isExpert()} == true"
+               class="btn" type="button" value="Добавить термин"
+               onclick="window.location.href = '/dictionary/addNewTerm'">
+    </div>
+</section>
+
+<section class="section1">
+    <nav class="nav_word">
+        <div th:each="word,iterStat : ${words}">
+            <a class="nav_link" th:href="@{/dictionary/paginationTerm(word=${word})}"
+               th:text="${word}"></a>
+        </div>
+    </nav>
+</section>
+
+<form th:action="@{/dictionary/search}" class="section_center"
+      style="font-family: 'Lobster', cursive">
+
+    <label for="term_section"></label>
+    <input type="text" th:name="nameTerm" id="term_section"
+           value="" class="line"
+           placeholder="Введите термин" autocomplete="off">
+    <input type="submit" class="btn_search" value="">
+
+    <br><br>
+    <div class="title_mess" th:if="${!message.isEmpty()}">
+        <h3 th:text="${message}"></h3>
+    </div>
+</form>
+
+<section id="people" class="section1">
+    <div class="container_people">
+        <h2 class="title">Разработчики словаря</h2>
+
+        <div class="people-cards">
+            <div class="person-card">
+<!--                <img src="images/employees/sir.jpg" alt="Дубик Photo">-->
+                <div class="card-info">
+                    <h3 class="card-name">Дубик Алеся Владимировна</h3>
+                </div>
+                <p class="card-text">Henry Twill Jr. is the <em>founder</em> and CEO of H+ Sports.</p>
+            </div><!-- person-card -->
+
+            <div class="person-card">
+<!--                <img src="images/employees/sir.jpg" alt="Лапунина Photo">-->
+                <div class="card-info">
+                    <h3 class="card-name">Лапунина Татьяна Альбертовна</h3>
+                </div>
+                <p class="card-text">Jessica Newton-Smith joined us in 2012 and brings more than <em>10 years</em>
+                    of financial management experience to H+ Sports.</p>
+            </div><!-- person-card -->
+
+            <div class="person-card">
+<!--                <img src="images/employees/sir.jpg" alt="Кравчунас Photo">-->
+                <div class="card-info">
+                    <h3 class="card-name">Кравчунас Галина Викторовна</h3>
+                </div>
+                <p class="card-text">Phi Tang joined H+ Sports in <em>2007</em> as Manager of Marketing Research.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<footer class="footer">
+    <p>На данный момент сайт находится на стадии разработки :) </p>
+</footer>
+
+</body>
+</html>

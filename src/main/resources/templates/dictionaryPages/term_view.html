@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>СЛЭ</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+
+<header class="header">
+    <form th:action="@{/logout}" method="post">
+        <input class="btn" type="submit" value="Выйти"/>
+    </form>
+    <nav class="nav_main">
+        <a class="nav_link" th:href="@{/main}">На главную</a>
+        <a class="nav_link" th:href="@{/dictionary}">К словарю</a>
+        <a class="nav_link" th:href="@{/dictionary/paginationTerm}">Все термины</a>
+        <a class="nav_link" th:href="@{/dictionary/goToSections}">К разделам</a>
+        <a class="nav_link" th:href="@{/dictionary/changeTerm(termId=${term.id})}">Изменить термин</a>
+    </nav>
+</header>
+
+<body>
+
+<section class="uni_section" id="center_align">
+    <div class="section_title" th:text="${term.name}"></div>
+    <label>
+        <textarea readonly cols="60" rows="30" th:text="${term.definition}"></textarea>
+    </label>
+    <br><br><br>
+    <label>
+        <textarea readonly cols="60" rows="3" th:text="${term.source}"></textarea>
+    </label>
+</section>
+
+<footer class="footer">
+    <p>H+ Sport is a fictitious brand created by
+        lynda.com solely for the purpose of training. All products and
+        people associated with H+ Sport are also fictitious. Any resemblance
+        to real brands, products, or people is purely coincidental.
+        Information provided about the product is also fictitious and should
+        not be construed to be representative of actual products on the
+        market in a similar product category.</p>
+</footer>
+</body>
+</html>

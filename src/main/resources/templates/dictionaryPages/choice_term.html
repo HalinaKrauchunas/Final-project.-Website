@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" class="html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>СЛЭ</title>
+    <link rel="icon" href="images/favicon2.ico" type="image/x-icon">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="header">
+    <form th:action="@{/logout}" method="post">
+        <input class="btn" type="submit" value="Выйти"/>
+    </form>
+
+    <nav class="nav_main">
+        <a class="nav_link" th:href="@{/main}">На главную</a>
+        <a class="nav_link" th:href="@{/dictionary}">К словарю</a>
+        <a class="nav_link" th:href="@{/dictionary/paginationTerm}">Все термины</a>
+        <a class="nav_link" th:href="@{/dictionary/goToSections}">К разделам</a>
+    </nav>
+</header>
+
+<section class="section_center" th:if="${terms.size() > 1}">
+    <h1 class="section_title">Выбрать термин</h1>
+    <table class="table">
+        <tr th:each="term : ${terms}">
+            <td class="td_dark_odd" th:text="${term.name} "></td>
+            <td class="td_grey_even" th:text="${term.section.name}"></td>
+            <td class="td_blue_odd" th:text="${term.source.substring(0,6) + '..'}"></td>
+
+            <td class="td_almost"><a th:href="@{/dictionary/goToTerm(termId=${term.id})}" class="btn"
+                                     th:text="Перейти"></a></td>
+        </tr>
+    </table>
+</section>
+
+</body>
+</html>
